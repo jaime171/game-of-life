@@ -7,7 +7,8 @@ import {
   NUM_ROWS as numRows,
   NUM_COLS as numCols,
   TIMEOUT as timeout,
-  RANDOM_PROBABILITY as randomProbability
+  RANDOM_PROBABILITY as randomProbability,
+  CELL_SIZE as cellSize
 } from './config'
 
 /*
@@ -146,27 +147,31 @@ const App = () => {
               }}>Clear</button>
           </div>
         </div>
-        <div className="col s12 l8">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${numCols}, 20px)`
-          }}>
-            {grid.map((rows, i) =>
-              rows.map((col, k) =>
-                <div
-                  key={`${i}-${k}`}
-                  onClick={() => {
-                    const newGrid = produce(grid, gridCopy => {
-                      gridCopy[i][k] = gridCopy[i][k] ? 0 : 1
-                    })
-                    setGrid(newGrid)
-                  }}
-                  className="cell"
-                  style={{
-                    // if is 0 would be undefined and 1 would be colored
-                    backgroundColor: grid[i][k] ? 'lightcoral' : undefined
-                  }}>
-                </div>))}
+        <div className="row">
+          <div className="col s12">
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: `repeat(${numCols}, ${cellSize}px)`
+            }}>
+              {grid.map((rows, i) =>
+                rows.map((col, k) =>
+                  <div
+                    key={`${i}-${k}`}
+                    onClick={() => {
+                      const newGrid = produce(grid, gridCopy => {
+                        gridCopy[i][k] = gridCopy[i][k] ? 0 : 1
+                      })
+                      setGrid(newGrid)
+                    }}
+                    className="cell"
+                    style={{
+                      // if is 0 would be undefined and 1 would be colored
+                      backgroundColor: grid[i][k] ? 'lightcoral' : undefined,
+                      height: cellSize,
+                      width: cellSize
+                    }}>
+                  </div>))}
+            </div>
           </div>
         </div>
       </div>
